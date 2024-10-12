@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import { useState,useEffect } from "react";
 
 const NavBar = () => {
   const [activePage, setActivePage] = useState('Home'); // Tracks active page
@@ -6,11 +6,12 @@ const NavBar = () => {
 
   
   // Function to handle page change
-  const handlePageChange = (page: React.SetStateAction<string>) => {
+  const handlePageChange = (page: string) => {
     setActivePage(page);
-    console.log(page,activePage);
+    
   };
 
+  console.log(activePage);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -34,6 +35,7 @@ const NavBar = () => {
   }, []);
 
   
+  
   return (
 <nav
       className={`flex z-50 items-center justify-between p-4 sm:p-9 fixed top-0 right-0 w-full  transition-transform  ease-out duration-700 
@@ -46,13 +48,15 @@ const NavBar = () => {
         {['Home', 'Resume', 'Works', 'Contacts'].map(page => (
           <li key={page}>
             <a
-             href={`${page.toLowerCase()}`}
+             href={`${activePage=== 'Home'? '/':page.toLowerCase()}`}
              className={`font-bold ease-in-out duration-150 hover:text-gray-100   ${
                 activePage === page ? 'text-teal-500 ' : 'text-gray-300 opacity-70 '
               }`}
               onClick={() => handlePageChange(page)}
             >
-             <p className=" ease-out duration-75 transition-transform "> {page}</p>
+             <span className="block  transform transition-transform duration-300 ease group-hover:-translate-y-full">{page}</span>
+            <span className="block  transform translate-y-full transition-transform duration-300 ease group-hover:translate-y-0">{page}</span>
+
             </a>
           </li>
         ))}
